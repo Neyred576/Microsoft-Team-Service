@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import styles from './ClientSearch.module.css';
 
 const mockCompanies: string[] = [
+  'GLOBAL GROUP OF COMPANY LLC',
   'GLOBAL WAYS COMMERCIAL BROKERS LLC',
   'EMIRATES GROUP',
   'ETIHAD AIRWAYS',

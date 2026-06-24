@@ -1,8 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Mail, Clock } from 'lucide-react';
 import styles from './page.module.css';
+
+const BUSINESS_EMAIL = 'www.microsoftteam@gmail.com';
+
+function buildGmailLink(subject: string, body: string): string {
+  return `https://mail.google.com/mail/?view=cm&to=${BUSINESS_EMAIL}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -23,7 +29,7 @@ export default function ContactPage() {
       newErrors.email = 'Email is invalid';
     }
     if (!formData.message.trim()) newErrors.message = 'Message is required';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -31,13 +37,28 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // Mock API call
-      setTimeout(() => {
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', company: '', message: '' });
-      }, 500);
+      const subject = `Website Enquiry – ${formData.name}${formData.company ? ` (${formData.company})` : ''}`;
+      const body =
+        `New enquiry received from your Microsoft Team - Company Services website.\n\n` +
+        `──────────────────────────────\n` +
+        `Full Name:    ${formData.name}\n` +
+        `Work Email:   ${formData.email}\n` +
+        `Company:      ${formData.company || 'N/A'}\n` +
+        `──────────────────────────────\n\n` +
+        `Message:\n${formData.message}\n\n` +
+        `──────────────────────────────\n` +
+        `Sent via the Microsoft Team - Company Services contact form.`;
+
+      // Open Gmail compose in a new tab with all details pre-filled
+      window.open(buildGmailLink(subject, body), '_blank', 'noopener,noreferrer');
+
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', company: '', message: '' });
     }
   };
+
+  // Plain Gmail compose link for the clickable email address (client types freely)
+  const emailComposeLink = buildGmailLink('Enquiry – Microsoft Team - Company Services', '');
 
   return (
     <>
@@ -54,20 +75,20 @@ export default function ContactPage() {
         {/* Contact Form */}
         <div>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Send us a message</h2>
-          
+
           {isSubmitted && (
             <div className={styles.successMessage}>
-              Thank you for your message. A Microsoft Team Services representative will contact you shortly.
+              ✅ Your message has been sent! A new Gmail tab has opened with your details. Please review and click <strong>Send</strong> in Gmail to complete your submission.
             </div>
           )}
 
           <form onSubmit={handleSubmit} noValidate>
             <div className={styles.formGroup}>
               <label htmlFor="name" className={styles.formLabel}>Full Name *</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 id="name"
-                className={styles.formInput} 
+                className={styles.formInput}
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
@@ -76,10 +97,10 @@ export default function ContactPage() {
 
             <div className={styles.formGroup}>
               <label htmlFor="email" className={styles.formLabel}>Work Email *</label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 id="email"
-                className={styles.formInput} 
+                className={styles.formInput}
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
@@ -88,10 +109,10 @@ export default function ContactPage() {
 
             <div className={styles.formGroup}>
               <label htmlFor="company" className={styles.formLabel}>Company Name</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 id="company"
-                className={styles.formInput} 
+                className={styles.formInput}
                 value={formData.company}
                 onChange={(e) => setFormData({...formData, company: e.target.value})}
               />
@@ -99,9 +120,9 @@ export default function ContactPage() {
 
             <div className={styles.formGroup}>
               <label htmlFor="message" className={styles.formLabel}>How can we help? *</label>
-              <textarea 
+              <textarea
                 id="message"
-                className={styles.formTextarea} 
+                className={styles.formTextarea}
                 value={formData.message}
                 onChange={(e) => setFormData({...formData, message: e.target.value})}
               ></textarea>
@@ -115,9 +136,9 @@ export default function ContactPage() {
         {/* Business Info */}
         <div className={styles.infoSection}>
           <div style={{ width: '100%', height: '200px', borderRadius: '4px', overflow: 'hidden', marginBottom: '2rem' }}>
-            <img 
-              src="/contact_support.png" 
-              alt="Customer support representative" 
+            <img
+              src="/contact_support.png"
+              alt="Customer support representative"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -126,7 +147,16 @@ export default function ContactPage() {
               <Mail size={20} color="var(--ms-blue)" /> Email inquiries
             </h3>
             <div className={styles.infoContent}>
-              <p>Business Related Services: <a href="mailto:www.microsoftteam@gmail.com" style={{ color: 'var(--ms-blue)', textDecoration: 'underline' }}>www.microsoftteam@gmail.com</a></p>
+              <p>Business Related Services:{' '}
+                <a
+                  href={emailComposeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--ms-blue)', textDecoration: 'underline' }}
+                >
+                  {BUSINESS_EMAIL}
+                </a>
+              </p>
             </div>
           </div>
 
@@ -156,3 +186,4 @@ export default function ContactPage() {
     </>
   );
 }
+

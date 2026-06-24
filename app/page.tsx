@@ -26,7 +26,7 @@ export default function Home() {
               View Business Contracts
             </Link>
             <Link href="/contact" className={`btn btn-outline ${styles.btnHeroSecondary}`}>
-              Contact Sales
+              Contact Business Centre
             </Link>
           </div>
         </SlideUp>
