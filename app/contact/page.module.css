@@ -1,0 +1,102 @@
+.contactHeader {
+  background-color: var(--ms-gray-10);
+  padding: 4rem 5% 3rem;
+  border-bottom: 1px solid var(--ms-gray-40);
+}
+
+.contactLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 4rem 5%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .contactLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ms-black);
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--ms-gray-90);
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--ms-blue);
+  box-shadow: 0 0 0 1px var(--ms-blue);
+}
+
+.formTextarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.formError {
+  color: #D13438; /* Microsoft Red */
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.infoSection {
+  background: var(--ms-gray-10);
+  padding: 2.5rem;
+  border-radius: 4px;
+}
+
+.infoBlock {
+  margin-bottom: 2.5rem;
+}
+
+.infoBlock:last-child {
+  margin-bottom: 0;
+}
+
+.infoTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ms-black);
+}
+
+.infoContent {
+  color: var(--ms-gray-130);
+  line-height: 1.6;
+}
+
+.infoContent p {
+  margin-bottom: 0.5rem;
+}
+
+.successMessage {
+  background-color: #DFF6DD; /* Light green */
+  color: #107C10; /* Dark green */
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}

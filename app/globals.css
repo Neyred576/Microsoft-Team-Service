@@ -1,0 +1,126 @@
+:root {
+  --ms-blue: #0078D4;
+  --ms-blue-hover: #005A9E;
+  --ms-black: #000000;
+  --ms-gray-10: #FAFAFA;
+  --ms-gray-20: #F3F2F1;
+  --ms-gray-30: #EDEBE9;
+  --ms-gray-40: #E1DFDD;
+  --ms-gray-50: #D2D0CE;
+  --ms-gray-60: #C8C6C4;
+  --ms-gray-90: #605E5C;
+  --ms-gray-130: #3B3A39;
+  --ms-gray-160: #201F1E;
+  
+  --font-family-primary: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  --max-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  color: var(--ms-gray-160);
+  background-color: #FFFFFF;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ms-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: var(--font-family-primary);
+  cursor: pointer;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--ms-black);
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  margin-bottom: 2.5rem;
+  color: var(--ms-gray-130);
+}
+
+/* Typography Utilities */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Button Utilities */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--ms-blue);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background-color: var(--ms-blue-hover);
+  text-decoration: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--ms-blue);
+  border-color: var(--ms-blue);
+}
+
+.btn-outline:hover {
+  background-color: var(--ms-gray-10);
+  text-decoration: none;
+}
+
+/* Card Utilities */
+.card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+  padding: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 6.4px 14.4px 0 rgba(0,0,0,0.132), 0 1.2px 3.6px 0 rgba(0,0,0,0.108);
+  transform: translateY(-2px);
+}

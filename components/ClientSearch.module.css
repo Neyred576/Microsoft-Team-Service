@@ -1,0 +1,77 @@
+.searchSection {
+  background-color: var(--ms-gray-10);
+  padding: 4rem 0;
+}
+
+.searchHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.searchTitle {
+  font-size: 1.5rem;
+  color: var(--ms-gray-130);
+  margin-bottom: 1.5rem;
+}
+
+.searchInputWrapper {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ms-gray-90);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 1rem;
+  border: 1px solid var(--ms-gray-40);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.searchInput:focus {
+  border-color: var(--ms-blue);
+  box-shadow: 0 0 0 1px var(--ms-blue);
+}
+
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.companyCard {
+  background: #fff;
+  border: 1px solid var(--ms-gray-40);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--ms-gray-160);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.companyCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  border-color: var(--ms-gray-60);
+}
+
+.noResults {
+  text-align: center;
+  color: var(--ms-gray-90);
+  padding: 2rem;
+  font-size: 1rem;
+}

@@ -1,0 +1,147 @@
+.dashboardHeader {
+  background-color: var(--ms-gray-10);
+  padding: 3rem 5%;
+  border-bottom: 1px solid var(--ms-gray-40);
+  margin-bottom: 2rem;
+}
+
+.dashboardTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 900px) {
+  .gridContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.overviewCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  padding: 1.5rem;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid var(--ms-gray-40);
+  border-left: 4px solid var(--ms-blue);
+}
+
+.statLabel {
+  color: var(--ms-gray-130);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--ms-black);
+}
+
+.statDesc {
+  font-size: 0.75rem;
+  color: var(--ms-gray-90);
+  margin-top: 0.5rem;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--ms-gray-40);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.panelTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ms-gray-40);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.updateItem {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--ms-gray-30);
+}
+
+.updateItem:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.updateDate {
+  font-size: 0.75rem;
+  color: var(--ms-blue);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.updateTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.updateDesc {
+  font-size: 0.875rem;
+  color: var(--ms-gray-130);
+}
+
+.resourceList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resourceItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--ms-gray-10);
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.resourceItem:hover {
+  background-color: var(--ms-gray-20);
+}
+
+.resourceIcon {
+  color: var(--ms-blue);
+}
+
+.resourceText {
+  flex-grow: 1;
+}
+
+.resourceName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ms-black);
+}
+
+.resourceMeta {
+  font-size: 0.75rem;
+  color: var(--ms-gray-130);
+}
