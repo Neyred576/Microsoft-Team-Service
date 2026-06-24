@@ -52,7 +52,9 @@ export const saveCompanies = async (companies: Company[]) => {
     if (!res.ok) throw new Error('Failed to save to JSONBin');
     
     if (typeof window !== 'undefined') {
-      // Dispatch a custom event so other components (like ClientSearch) know to re-render
+      // Trigger a storage event to instantly update other open tabs side-by-side
+      localStorage.setItem('mts_sync_timestamp', Date.now().toString());
+      // Dispatch a custom event so other components in THIS tab know to re-render
       window.dispatchEvent(new Event('mts_companies_updated'));
     }
   } catch (e) {

@@ -120,8 +120,22 @@ export default function ClientSearch() {
 
   useEffect(() => {
     loadCompanies();
+    
+    // 1. Listen for updates in the SAME tab (from custom event)
     window.addEventListener('mts_companies_updated', loadCompanies);
-    return () => window.removeEventListener('mts_companies_updated', loadCompanies);
+    
+    // 2. Listen for cross-tab updates (if admin is open in another tab on same device)
+    window.addEventListener('storage', loadCompanies);
+    
+    // 3. Listen for window focus (auto-updates when a user switches back to the website tab)
+    window.addEventListener('focus', loadCompanies);
+    
+    // Cleanup listeners
+    return () => {
+      window.removeEventListener('mts_companies_updated', loadCompanies);
+      window.removeEventListener('storage', loadCompanies);
+      window.removeEventListener('focus', loadCompanies);
+    };
   }, []);
 
   const featuredCompanies = dynamicCompanies.filter(c => c.featured);
