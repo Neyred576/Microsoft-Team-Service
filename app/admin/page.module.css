@@ -1,0 +1,202 @@
+.adminContainer {
+  min-height: 100vh;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: 'Inter', sans-serif;
+}
+
+.loginCard {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.loginCard h1 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background: #238636;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background: #2ea043;
+}
+
+.dashboard {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btnSecondary {
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btnSecondary:hover {
+  background: #30363d;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #30363d;
+}
+
+.table th {
+  background: #0d1117;
+  font-weight: 600;
+  color: #8b949e;
+}
+
+.logoCell img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badgeFeatured {
+  background: rgba(46, 160, 67, 0.15);
+  color: #3fb950;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #58a6ff;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.actionBtn:hover {
+  text-decoration: underline;
+}
+
+.actionBtnDelete {
+  color: #f85149;
+}
+
+/* Modal Form */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalContent {
+  width: 450px;
+  background: #161b22;
+  height: 100%;
+  padding: 40px;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+  overflow-y: auto;
+}
+
+.modalContent h2 {
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #c9d1d9;
+}
+
+.formGroup input, .formGroup textarea {
+  width: 100%;
+  padding: 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.formGroup input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modalActions {
+  display: flex;
+  gap: 15px;
+  margin-top: 40px;
+}

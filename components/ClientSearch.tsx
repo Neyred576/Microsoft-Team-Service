@@ -1,12 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ClientSearch.module.css';
+import { Company, getCompanies } from '../lib/companyStore';
+import FeaturedCompanyCard from './FeaturedCompanyCard';
 
 const mockCompanies: string[] = [
-  'GLOBAL GROUP OF COMPANY LLC',
-  'GLOBAL WAYS COMMERCIAL BROKERS LLC',
+  // Static list. Note: The 4 dynamically featured companies have been removed from this 
+  // hardcoded list because they will be injected dynamically from companyStore.
   'EMIRATES GROUP',
   'ETIHAD AIRWAYS',
   'DUBAI ELECTRICITY AND WATER AUTHORITY (DEWA)',
@@ -27,7 +30,6 @@ const mockCompanies: string[] = [
   'UNION PROPERTIES',
   'ADNOC',
   'ENOC',
-  'EMIRATES GLOBAL ALUMINIUM',
   'DP WORLD',
   'JAFZA',
   'DUBAI AIRPORTS',
@@ -100,7 +102,6 @@ const mockCompanies: string[] = [
   'TECH FALCON',
   'GBM (GULF BUSINESS MACHINES)',
   'RAQMIYAT',
-  'FINESSE GLOBAL',
   'CRAYON MIDDLE EAST',
   'CLOUD BOX TECHNOLOGIES',
   'MICROLAND GULF',
@@ -111,8 +112,27 @@ const mockCompanies: string[] = [
 
 export default function ClientSearch() {
   const [query, setQuery] = useState('');
+  const [dynamicCompanies, setDynamicCompanies] = useState<Company[]>([]);
 
-  const filteredCompanies = mockCompanies.filter(company => 
+  const loadCompanies = () => {
+    getCompanies().then(setDynamicCompanies);
+  };
+
+  useEffect(() => {
+    loadCompanies();
+    window.addEventListener('mts_companies_updated', loadCompanies);
+    return () => window.removeEventListener('mts_companies_updated', loadCompanies);
+  }, []);
+
+  const featuredCompanies = dynamicCompanies.filter(c => c.featured);
+  
+  // Combine static list with dynamic ones marked as "inTrustedList"
+  const allSearchableCompanies = [
+    ...dynamicCompanies.filter(c => c.inTrustedList).map(c => c.name),
+    ...mockCompanies
+  ];
+
+  const filteredCompanies = allSearchableCompanies.filter(company => 
     company.toLowerCase().includes(query.toLowerCase())
   );
 
@@ -135,21 +155,66 @@ export default function ClientSearch() {
           </div>
         </div>
 
-        {hasSearched && (
-          filteredCompanies.length > 0 ? (
-            <div className={styles.resultsGrid}>
-              {filteredCompanies.map((company, index) => (
-                <div key={index} className={styles.companyCard}>
-                  {company}
+        {/* Featured Companies Grid */}
+        <AnimatePresence mode="wait">
+          {!hasSearched && featuredCompanies.length > 0 && (
+            <motion.div 
+              className="featured-wrapper"
+              key="featured"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={styles.featuredGrid}>
+                {featuredCompanies.map(company => (
+                  <FeaturedCompanyCard key={company.id} company={company} />
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Search Results */}
+        <AnimatePresence mode="wait">
+          {hasSearched && (
+            <motion.div 
+              className="search-results-wrapper"
+              key="results"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              {filteredCompanies.length > 0 ? (
+                <div className={styles.resultsGrid}>
+                  <AnimatePresence>
+                    {filteredCompanies.map((company) => (
+                      <motion.div 
+                        key={company} 
+                        className={styles.companyCard}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {company}
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className={styles.noResults}>
-              No companies found matching "{query}".
-            </div>
-          )
-        )}
+              ) : (
+                <motion.div 
+                  className={styles.noResults}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  No companies found matching "{query}".
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

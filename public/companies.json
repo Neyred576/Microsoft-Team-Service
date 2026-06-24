@@ -1,0 +1,54 @@
+[
+  {
+    "id": "1",
+    "name": "GLOBAL WAYS COMMERCIAL BROKERS LLC",
+    "logoUrl": "/logos/global_ways.jpeg",
+    "address": "Office Number 225, Bintani Building, Yusuf Bakarr Road, Deira Dubai – UAE",
+    "email": "globalways59@gmail.com",
+    "phone": "",
+    "mtsAccount": "024 -935058",
+    "mtsUsage": "1 - 2 Device Users",
+    "featured": true,
+    "inTrustedList": true,
+    "createdAt": "2026-06-24T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "GLOBAL FINANCE",
+    "logoUrl": "/logos/global_finance.jpeg",
+    "address": "Office Number 1424, Wasl Building, Khaid Road, Abu Dhabi – UAE",
+    "email": "globalfinance@gmail.com",
+    "phone": "",
+    "mtsAccount": "061 -152620",
+    "mtsUsage": "6 -15 Device Users",
+    "featured": true,
+    "inTrustedList": true,
+    "createdAt": "2026-06-24T00:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": "EMIRATES GLOBAL ALUMINIUM",
+    "logoUrl": "/logos/ega.jpeg",
+    "address": "Jebel Ali Industrial Area, Dubai, UAE.",
+    "email": "sales@ega.ae",
+    "phone": "",
+    "mtsAccount": "181 -138867",
+    "mtsUsage": "6 -15 Device Users",
+    "featured": true,
+    "inTrustedList": true,
+    "createdAt": "2026-06-24T00:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "name": "GLOBAL GROUP OF COMPANIES",
+    "logoUrl": "/logos/global_group.jpeg",
+    "address": "Deira Tower - 2307 Baniyas Road, Dubai, UAE.",
+    "email": "globalgroup@gmail.com",
+    "phone": "",
+    "mtsAccount": "094 -145643",
+    "mtsUsage": "2 - 5 Device Users",
+    "featured": true,
+    "inTrustedList": true,
+    "createdAt": "2026-06-24T00:00:00.000Z"
+  }
+]
