@@ -161,7 +161,6 @@ export default function AdminPage() {
             <tr>
               <th>Logo</th>
               <th>Name</th>
-              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -172,9 +171,6 @@ export default function AdminPage() {
                   {c.logoUrl ? <img src={c.logoUrl} alt={c.name} /> : 'No Logo'}
                 </td>
                 <td>{c.name}</td>
-                <td>
-                  {c.featured && <span className={`${styles.badge} ${styles.badgeFeatured}`}>Featured</span>}
-                </td>
                 <td>
                   <button onClick={() => openModal(c)} className={styles.actionBtn}>Edit</button>
                   <button onClick={() => handleDelete(c.id)} className={`${styles.actionBtn} ${styles.actionBtnDelete}`}>Delete</button>
@@ -231,13 +227,6 @@ export default function AdminPage() {
                 <div className={styles.formGroup}>
                   <label>MTS Usage</label>
                   <input type="text" value={formData.mtsUsage} placeholder="e.g., 1-2 Device Users" onChange={e => setFormData({...formData, mtsUsage: e.target.value})} />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label className={styles.checkboxLabel}>
-                    <input type="checkbox" checked={formData.featured} onChange={e => setFormData({...formData, featured: e.target.checked})} />
-                    Feature on main page? (Shows rich card)
-                  </label>
                 </div>
 
                 <div className={styles.formGroup}>

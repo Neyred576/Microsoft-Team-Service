@@ -5,11 +5,9 @@ import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ClientSearch.module.css';
 import { Company, getCompanies } from '../lib/companyStore';
-import FeaturedCompanyCard from './FeaturedCompanyCard';
+import CompanyModal from './CompanyModal';
 
 const mockCompanies: string[] = [
-  // Static list. Note: The 4 dynamically featured companies have been removed from this 
-  // hardcoded list because they will be injected dynamically from companyStore.
   'EMIRATES GROUP',
   'ETIHAD AIRWAYS',
   'DUBAI ELECTRICITY AND WATER AUTHORITY (DEWA)',
@@ -113,6 +111,7 @@ const mockCompanies: string[] = [
 export default function ClientSearch() {
   const [query, setQuery] = useState('');
   const [dynamicCompanies, setDynamicCompanies] = useState<Company[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
   const loadCompanies = () => {
     getCompanies().then(setDynamicCompanies);
@@ -120,17 +119,14 @@ export default function ClientSearch() {
 
   useEffect(() => {
     loadCompanies();
-    
-    // 1. Listen for updates in the SAME tab (from custom event)
+
+    // Listen for updates in the SAME tab
     window.addEventListener('mts_companies_updated', loadCompanies);
-    
-    // 2. Listen for cross-tab updates (if admin is open in another tab on same device)
+    // Listen for cross-tab updates
     window.addEventListener('storage', loadCompanies);
-    
-    // 3. Listen for window focus (auto-updates when a user switches back to the website tab)
+    // Auto-refresh when user switches back to this tab
     window.addEventListener('focus', loadCompanies);
-    
-    // Cleanup listeners
+
     return () => {
       window.removeEventListener('mts_companies_updated', loadCompanies);
       window.removeEventListener('storage', loadCompanies);
@@ -138,98 +134,110 @@ export default function ClientSearch() {
     };
   }, []);
 
-  const featuredCompanies = dynamicCompanies.filter(c => c.featured);
-  
-  // Combine static list with dynamic ones marked as "inTrustedList"
-  const allSearchableCompanies = [
-    ...dynamicCompanies.filter(c => c.inTrustedList).map(c => c.name),
-    ...mockCompanies
+  // Build a lookup map: company name (uppercase) -> Company object
+  const companyDetailMap = new Map<string, Company>();
+  dynamicCompanies.forEach(c => {
+    companyDetailMap.set(c.name.toUpperCase(), c);
+  });
+
+  // Merge: all dynamic companies + static mock list (deduped)
+  const dynamicNames = new Set(dynamicCompanies.map(c => c.name.toUpperCase()));
+  const allSearchableNames = [
+    ...dynamicCompanies.map(c => c.name),
+    ...mockCompanies.filter(m => !dynamicNames.has(m.toUpperCase())),
   ];
 
-  const filteredCompanies = allSearchableCompanies.filter(company => 
-    company.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredCompanies = query.trim().length > 0
+    ? allSearchableNames.filter(name =>
+        name.toLowerCase().includes(query.toLowerCase())
+      )
+    : [];
 
   const hasSearched = query.trim().length > 0;
+
+  const handleCompanyClick = (name: string) => {
+    const detail = companyDetailMap.get(name.toUpperCase());
+    if (detail) {
+      setSelectedCompany(detail);
+    }
+    // If no detail exists, do nothing (just a name in the list)
+  };
+
+  const hasDetails = (name: string) => companyDetailMap.has(name.toUpperCase());
 
   return (
     <section className={styles.searchSection}>
       <div className="container">
         <div className={styles.searchHeader}>
           <h2 className={styles.searchTitle}>Trusted by enterprises worldwide</h2>
+          <p className={styles.searchSubtitle}>
+            Search to see if a company is part of the Microsoft Team Services network.
+          </p>
           <div className={styles.searchInputWrapper}>
             <Search className={styles.searchIcon} size={20} />
-            <input 
-              type="text" 
-              className={styles.searchInput} 
-              placeholder="Search for a company to see if they use our services..." 
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Search for a company..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
         </div>
 
-        {/* Featured Companies Grid */}
-        <AnimatePresence mode="wait">
-          {!hasSearched && featuredCompanies.length > 0 && (
-            <motion.div 
-              className="featured-wrapper"
-              key="featured"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className={styles.featuredGrid}>
-                {featuredCompanies.map(company => (
-                  <FeaturedCompanyCard key={company.id} company={company} />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Search Results */}
         <AnimatePresence mode="wait">
           {hasSearched && (
-            <motion.div 
-              className="search-results-wrapper"
+            <motion.div
               key="results"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.25 }}
             >
               {filteredCompanies.length > 0 ? (
                 <div className={styles.resultsGrid}>
                   <AnimatePresence>
-                    {filteredCompanies.map((company) => (
-                      <motion.div 
-                        key={company} 
-                        className={styles.companyCard}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {company}
-                      </motion.div>
-                    ))}
+                    {filteredCompanies.map((name) => {
+                      const clickable = hasDetails(name);
+                      return (
+                        <motion.button
+                          key={name}
+                          className={`${styles.companyCard} ${clickable ? styles.companyCardClickable : ''}`}
+                          onClick={() => handleCompanyClick(name)}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.18 }}
+                        >
+                          <span className={styles.companyCardName}>{name}</span>
+                          {clickable && (
+                            <span className={styles.viewProfileBadge}>View Profile →</span>
+                          )}
+                        </motion.button>
+                      );
+                    })}
                   </AnimatePresence>
                 </div>
               ) : (
-                <motion.div 
+                <motion.div
                   className={styles.noResults}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
-                  No companies found matching "{query}".
+                  No companies found matching &ldquo;{query}&rdquo;.
                 </motion.div>
               )}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Company Detail Modal */}
+      <CompanyModal
+        company={selectedCompany}
+        onClose={() => setSelectedCompany(null)}
+      />
     </section>
   );
 }

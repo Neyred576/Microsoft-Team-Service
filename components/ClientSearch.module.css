@@ -2,26 +2,33 @@
   padding: 80px 0;
   background-color: var(--ms-gray-20);
   border-top: 1px solid var(--ms-gray-40);
+  border-bottom: 1px solid var(--ms-gray-40);
 }
 
 .searchHeader {
   text-align: center;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto 40px auto;
 }
 
 .searchTitle {
   font-size: 2rem;
   color: var(--ms-black);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.searchSubtitle {
+  font-size: 1rem;
+  color: var(--ms-gray-130);
   margin-bottom: 24px;
-  font-weight: 600;
 }
 
 .searchInputWrapper {
   position: relative;
   width: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
 }
 
 .searchIcon {
@@ -30,66 +37,103 @@
   top: 50%;
   transform: translateY(-50%);
   color: var(--ms-gray-90);
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 16px 16px 16px 48px;
-  font-size: 1.1rem;
+  padding: 18px 18px 18px 50px;
+  font-size: 1.05rem;
   background-color: #FFFFFF;
   border: 1px solid var(--ms-gray-40);
-  border-radius: 8px;
+  border-radius: 10px;
   color: var(--ms-black);
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 .searchInput:focus {
   outline: none;
   border-color: var(--ms-blue);
-  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15);
 }
 
 .searchInput::placeholder {
   color: var(--ms-gray-90);
 }
 
-/* New Featured Grid */
-.featuredGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
-  margin-top: 40px;
-}
-
+/* Results Grid */
 .resultsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 32px;
 }
 
+/* Base card (non-clickable) */
 .companyCard {
   background-color: #FFFFFF;
-  padding: 20px;
-  border-radius: 6px;
+  padding: 16px 20px;
+  border-radius: 8px;
   border: 1px solid var(--ms-gray-40);
   color: var(--ms-gray-160);
   font-weight: 500;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
 }
 
-.companyCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+/* Clickable card (has details) */
+.companyCardClickable {
+  cursor: pointer;
+  border-color: rgba(0, 120, 212, 0.25);
+}
+
+.companyCardClickable:hover {
+  box-shadow: 0 6px 20px rgba(0, 120, 212, 0.12);
   border-color: var(--ms-blue);
+}
+
+.companyCardClickable:hover .companyCardName {
   color: var(--ms-blue);
+}
+
+.companyCardName {
+  transition: color 0.2s;
+  line-height: 1.4;
+}
+
+.viewProfileBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ms-blue);
+  background: rgba(0, 120, 212, 0.08);
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.companyCardClickable:hover .viewProfileBadge {
+  background: rgba(0, 120, 212, 0.15);
 }
 
 .noResults {
   text-align: center;
   color: var(--ms-gray-130);
   margin-top: 40px;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  padding: 40px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px dashed var(--ms-gray-40);
 }
