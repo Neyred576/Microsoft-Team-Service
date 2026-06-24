@@ -12,41 +12,51 @@ export type Company = {
   createdAt: string;
 };
 
-const STORAGE_KEY = 'mts_companies';
+const JSONBIN_ID = '6a3c2574f5f4af5e292a7611';
+const JSONBIN_KEY = '$2a$10$HrOYWxgUF5bUqWGH/0q//ukvQjAT63FazHftPy2HW3NuaK/rsiZ5W';
 
 export const getCompanies = async (): Promise<Company[]> => {
-  if (typeof window === 'undefined') return [];
-  
-  // 1. Check local storage first (admin changes)
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch (e) {
-      console.error('Failed to parse companies from local storage', e);
-    }
-  }
-
-  // 2. Fallback to public/companies.json (initial/default state)
   try {
-    const res = await fetch('/companies.json');
-    if (res.ok) {
-      const data = await res.json();
-      // Cache it in local storage so admin edits work from this base
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      return data;
-    }
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+      headers: {
+        'X-Master-Key': JSONBIN_KEY,
+        // Bypass caching for fresh results
+        'Cache-Control': 'no-cache'
+      }
+    });
+    if (!res.ok) throw new Error('Network response was not ok');
+    const data = await res.json();
+    return data.record || [];
   } catch (e) {
-    console.error('Failed to fetch companies.json', e);
+    console.error('Failed to fetch companies from JSONBin, falling back to local JSON.', e);
+    try {
+      const res = await fetch('/companies.json');
+      return await res.json();
+    } catch {
+      return [];
+    }
   }
-
-  return [];
 };
 
-export const saveCompanies = (companies: Company[]) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(companies));
-    // Dispatch a custom event so other components (like ClientSearch) know to re-render
-    window.dispatchEvent(new Event('mts_companies_updated'));
+export const saveCompanies = async (companies: Company[]) => {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY
+      },
+      body: JSON.stringify(companies)
+    });
+    
+    if (!res.ok) throw new Error('Failed to save to JSONBin');
+    
+    if (typeof window !== 'undefined') {
+      // Dispatch a custom event so other components (like ClientSearch) know to re-render
+      window.dispatchEvent(new Event('mts_companies_updated'));
+    }
+  } catch (e) {
+    console.error('Save failed', e);
+    alert('Failed to save changes to the cloud database. Check your console.');
   }
 };

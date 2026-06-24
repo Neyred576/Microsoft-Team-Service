@@ -125,16 +125,6 @@ export default function AdminPage() {
     }
   };
 
-  const exportJson = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(companies, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
-    downloadAnchorNode.setAttribute("download", "companies.json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-  };
-
   if (!isAuthenticated) {
     return (
       <div className={styles.adminContainer}>
@@ -163,7 +153,6 @@ export default function AdminPage() {
           <h1>Company Management</h1>
           <div className={styles.actions}>
             <button onClick={() => openModal()} className={styles.btn}>+ Add Company</button>
-            <button onClick={exportJson} className={styles.btnSecondary}>Export JSON</button>
           </div>
         </div>
 
