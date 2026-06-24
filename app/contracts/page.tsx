@@ -6,6 +6,25 @@ import SlideUp from '../../components/animations/SlideUp';
 import StaggerGrid from '../../components/animations/StaggerGrid';
 import FadeIn from '../../components/animations/FadeIn';
 
+function getPlanEmailLink(title: string, price: string, vat: string): string {
+  const to = 'www.microsoftteam@gmail.com';
+  const subject = encodeURIComponent(`Business Plan Inquiry – ${title} Plan`);
+  const body = encodeURIComponent(
+    `Hello Microsoft Team - Company Services Team,\n\n` +
+    `I am interested in the following business plan:\n\n` +
+    `  Plan:  ${title}\n` +
+    `  Price: ${price} ${vat}\n\n` +
+    `Could you please provide more details and the next steps to get started?\n\n` +
+    `Looking forward to hearing from you.\n\n` +
+    `Best regards,\n` +
+    `[Your Name]\n` +
+    `[Your Company]\n` +
+    `[Your Phone Number]`
+  );
+  // Opens Gmail compose in a new browser tab with the email pre-filled
+  return `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`;
+}
+
 const plans = [
   {
     title: '1 – 2 Device Users',
@@ -90,9 +109,15 @@ export default function ContractsPage() {
                 <span className={styles.priceUnit}> {plan.vat}</span>
               </div>
 
-              <Link href="/contact" className="btn btn-primary" style={{ width: '100%', marginBottom: '1.5rem', display: 'block', textAlign: 'center' }}>
+              <a
+                href={getPlanEmailLink(plan.title, plan.price, plan.vat)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+                style={{ width: '100%', marginBottom: '1.5rem', display: 'block', textAlign: 'center' }}
+              >
                 Get started
-              </Link>
+              </a>
 
               <ul className={styles.featureList}>
                 {plan.features.map((f, j) => (

@@ -17,7 +17,7 @@ export default function Home() {
         />
         <div className={styles.heroOverlay}></div>
         <SlideUp className={styles.heroContent} duration={0.8}>
-          <h1 className={styles.heroTitle}>Empower your enterprise with Microsoft Team Services</h1>
+          <h1 className={styles.heroTitle}>Empower Your Enterprise With Microsoft Team - Company Services</h1>
           <p className={styles.heroSubtitle}>
             Unlock world-class productivity, enterprise-grade security, and seamless collaboration with our tailored business contracts.
           </p>

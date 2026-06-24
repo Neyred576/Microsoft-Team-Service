@@ -43,7 +43,7 @@ export default function ContactPage() {
     <>
       <div className={styles.contactHeader}>
         <div className="container">
-          <h1 className="section-title">Contact our sales team</h1>
+          <h1 className="section-title">Contact our Business Team</h1>
           <p className="section-subtitle" style={{ maxWidth: '600px', margin: '0' }}>
             Whether you need a custom enterprise quote or technical support, our team of experts is ready to help you optimize your business.
           </p>
@@ -126,7 +126,7 @@ export default function ContactPage() {
               <Mail size={20} color="var(--ms-blue)" /> Email inquiries
             </h3>
             <div className={styles.infoContent}>
-              <p>General: <a href="mailto:www.microsoftteam@gmail.com" style={{ color: 'var(--ms-blue)', textDecoration: 'underline' }}>www.microsoftteam@gmail.com</a></p>
+              <p>Business Related Services: <a href="mailto:www.microsoftteam@gmail.com" style={{ color: 'var(--ms-blue)', textDecoration: 'underline' }}>www.microsoftteam@gmail.com</a></p>
             </div>
           </div>
 

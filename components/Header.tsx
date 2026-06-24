@@ -17,7 +17,7 @@ export default function Header() {
           </Link>
           <div className={styles.separator}></div>
           <Link href="/" className={styles.brandName}>
-            Microsoft Business Service
+            Microsoft Team - Company Services
           </Link>
         </div>
 
