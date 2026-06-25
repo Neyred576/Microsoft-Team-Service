@@ -10,7 +10,7 @@ export default function Footer() {
             <h4>Business Contracts</h4>
             <ul>
               <li><Link href="/contracts">1 – 2 Device Users</Link></li>
-              <li><Link href="/contracts">2 – 5 Device Users</Link></li>
+              <li><Link href="/contracts">3 – 5 Device Users</Link></li>
               <li><Link href="/contracts">6 – 15 Device Users</Link></li>
               <li><Link href="/contracts">Compare All Plans</Link></li>
             </ul>

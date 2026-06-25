@@ -46,7 +46,7 @@ export default function Header() {
 
         <div className={styles.actions}>
           <Link href="/contracts" className="btn btn-primary" style={{ padding: '0.375rem 1rem', fontSize: '0.875rem' }}>
-            View Plans
+            View Contracts
           </Link>
         </div>
       </div>

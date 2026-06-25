@@ -25,6 +25,8 @@ function getPlanEmailLink(title: string, price: string, vat: string): string {
   return `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`;
 }
 
+const NOTE = '📋 NOTE: Each price and device user count is based on a six (6) months contract minimum.';
+
 const plans = [
   {
     title: '1 – 2 Device Users',
@@ -32,6 +34,7 @@ const plans = [
     vat: '+20 VAT',
     recommended: false,
     features: [
+      NOTE,
       'Advanced identity and access management for up to 1–2 device users',
       'Web, mobile, and desktop versions 3 of Word, Excel, PowerPoint, and Access',
       'MTS 1 TB of cloud storage per device user',
@@ -43,11 +46,12 @@ const plans = [
     ],
   },
   {
-    title: '2 – 5 Device Users',
+    title: '3 – 5 Device Users',
     price: '$1,500',
     vat: '+20 VAT',
     recommended: true,
     features: [
+      NOTE,
       'Core identity and access management for up to 3–5 device users',
       'Desktop, web, and versions 3 of Word, Excel, PowerPoint, and Access',
       'MTS 3 TB of cloud storage per user',
@@ -63,6 +67,7 @@ const plans = [
     vat: '+20 VAT',
     recommended: false,
     features: [
+      NOTE,
       'Core identity and access management for up to 6–15 device users',
       'Desktop, web, and versions 5 of Word, Excel, PowerPoint, and Access',
       'MTS 10 TB of cloud storage per user',
@@ -121,10 +126,16 @@ export default function ContractsPage() {
 
               <ul className={styles.featureList}>
                 {plan.features.map((f, j) => (
-                  <li key={j} className={styles.featureItem}>
-                    <Check className={styles.featureCheckIcon} size={16} />
-                    <span>{f}</span>
-                  </li>
+                  j === 0 ? (
+                    <li key={j} className={styles.noteItem}>
+                      <span>{f}</span>
+                    </li>
+                  ) : (
+                    <li key={j} className={styles.featureItem}>
+                      <Check className={styles.featureCheckIcon} size={16} />
+                      <span>{f}</span>
+                    </li>
+                  )
                 ))}
               </ul>
 
@@ -168,7 +179,7 @@ export default function ContractsPage() {
                   <tr>
                     <th style={{ width: '40%' }}>Feature</th>
                     <th>1–2 Users</th>
-                    <th>2–5 Users</th>
+                    <th>3–5 Users</th>
                     <th>6–15 Users</th>
                   </tr>
                 </thead>

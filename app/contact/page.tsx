@@ -168,7 +168,7 @@ export default function ContactPage() {
               <p>Microsoft Team Services</p>
               <p>Office No. 1809 Al Noor Building</p>
               <p>WF18 Sheik Maktoum Road</p>
-              <p>Abu Dhabi</p>
+              <p>Abu Dhabi, United Arab Emirates</p>
             </div>
           </div>
 

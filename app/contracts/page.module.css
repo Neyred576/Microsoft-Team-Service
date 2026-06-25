@@ -93,6 +93,22 @@
   margin-top: 2px;
 }
 
+.noteItem {
+  display: flex;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7d4e00;
+  background-color: #fff8e1;
+  border: 1px solid #f0c040;
+  border-left: 4px solid #f0c040;
+  border-radius: 6px;
+  padding: 10px 12px;
+  line-height: 1.5;
+  list-style: none;
+  margin-bottom: 4px;
+}
+
 /* Apps Section */
 .appsSection {
   background-color: var(--ms-gray-10);
