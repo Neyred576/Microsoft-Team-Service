@@ -40,7 +40,7 @@ export default function Header() {
             href="/faq" 
             className={`${styles.navLink} ${pathname === '/faq' ? styles.navLinkActive : ''}`}
           >
-            FAQ's
+            FAQ&apos;s
           </Link>
 
           <Link 

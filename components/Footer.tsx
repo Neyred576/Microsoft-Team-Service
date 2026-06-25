@@ -20,7 +20,7 @@ export default function Footer() {
             <h4>Support</h4>
             <ul>
               <li><Link href="/policy">Device Authorization & Software Usage Policy</Link></li>
-              <li><Link href="/faq">FAQ's</Link></li>
+              <li><Link href="/faq">FAQ&apos;s</Link></li>
               <li><Link href="/contact">Contact Us</Link></li>
               <li><Link href="#">Help Center</Link></li>
               <li><Link href="#">Community Forums</Link></li>
