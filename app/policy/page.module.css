@@ -1,0 +1,60 @@
+.policyHeader {
+  text-align: center;
+  padding: 4rem 5% 2rem;
+}
+
+.policyContainer {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.accordion {
+  border-bottom: 1px solid var(--ms-gray-40);
+}
+
+.accordion:first-child {
+  border-top: 1px solid var(--ms-gray-40);
+}
+
+.accordionSummary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem 0;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ms-black);
+  cursor: pointer;
+}
+
+.accordionSummary:hover {
+  color: var(--ms-blue);
+}
+
+.accordionIcon {
+  color: var(--ms-blue);
+  transition: transform 0.2s ease;
+}
+
+.accordion[data-open="true"] .accordionIcon {
+  transform: rotate(180deg);
+}
+
+.accordionContent {
+  padding-bottom: 1.5rem;
+  color: var(--ms-gray-130);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.policyCTA {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--ms-gray-10);
+  border-radius: 4px;
+  margin-top: 4rem;
+}

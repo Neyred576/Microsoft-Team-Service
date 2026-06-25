@@ -19,6 +19,7 @@ export default function Footer() {
           <div className={styles.footerColumn}>
             <h4>Support</h4>
             <ul>
+              <li><Link href="/policy">Device Authorization & Software Usage Policy</Link></li>
               <li><Link href="/faq">FAQ's</Link></li>
               <li><Link href="/contact">Contact Us</Link></li>
               <li><Link href="#">Help Center</Link></li>

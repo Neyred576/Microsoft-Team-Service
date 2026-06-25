@@ -30,6 +30,13 @@ export default function Header() {
           </Link>
 
           <Link 
+            href="/policy" 
+            className={`${styles.navLink} ${pathname === '/policy' ? styles.navLinkActive : ''}`}
+          >
+            Device Authorization Policy
+          </Link>
+
+          <Link 
             href="/faq" 
             className={`${styles.navLink} ${pathname === '/faq' ? styles.navLinkActive : ''}`}
           >
