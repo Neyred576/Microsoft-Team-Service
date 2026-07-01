@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import LayoutWrapper from '../components/LayoutWrapper';
+import AnalyticsTracker from '../components/AnalyticsTracker';
 
 export const metadata: Metadata = {
   title: 'Microsoft Team Services - Business Plans & Subscriptions',
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <AnalyticsTracker />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
