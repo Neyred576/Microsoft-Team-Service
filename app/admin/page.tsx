@@ -127,7 +127,7 @@ export default function AdminPage() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!isAuthenticated || !db) return;
+    if (!isAuthenticated) return;
     
     // Subscribe to true real-time active visitors
     const activeVisitorsRef = ref(db, 'analytics/active_visitors');
