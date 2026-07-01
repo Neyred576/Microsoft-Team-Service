@@ -1,56 +1,63 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ref, onValue, set, onDisconnect, push } from 'firebase/database';
+import { ref, onValue, set, onDisconnect, push, serverTimestamp } from 'firebase/database';
 import { db } from '../lib/firebase';
 
 export default function AnalyticsTracker() {
   useEffect(() => {
     if (!db) return;
 
-    // Track Live Visitors (Presence)
-    const activeVisitorsRef = ref(db, 'analytics/active_visitors');
-    
-    // We create a unique reference for this specific user session
-    const mySessionRef = push(activeVisitorsRef);
-    
-    // Set the value to true to indicate we are online
-    set(mySessionRef, true);
-    
-    // When I disconnect, remove my session from the active_visitors list
-    onDisconnect(mySessionRef).remove();
+    // ─── PRESENCE TRACKING (Live Visitors) ───────────────────────────────────
+    // Firebase's .info/connected is the gold standard for presence detection.
+    // It fires TRUE when the client has an active connection, FALSE otherwise.
+    const connectedRef = ref(db, '.info/connected');
 
-    // Track Weekly Views and Daily Views
+    let mySessionRef: ReturnType<typeof push> | null = null;
+
+    const unsubConnected = onValue(connectedRef, (snap) => {
+      if (snap.val() === true) {
+        // We are connected — register this session
+        mySessionRef = push(ref(db, 'analytics/active_visitors'));
+
+        // Tell Firebase: "when I disconnect, remove my entry immediately"
+        onDisconnect(mySessionRef).remove();
+
+        // Now write our presence marker
+        set(mySessionRef, { connectedAt: serverTimestamp() });
+      }
+    });
+
+    // ─── PAGE VIEW TRACKING ───────────────────────────────────────────────────
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     const viewsRef = ref(db, 'analytics/total_views');
-    
-    // Get current date string (YYYY-MM-DD) for daily tracking
-    const today = new Date().toISOString().split('T')[0];
     const dailyViewsRef = ref(db, `analytics/daily_views/${today}`);
-    
+
     const hasVisitedThisSession = sessionStorage.getItem('mts_visited');
     if (!hasVisitedThisSession) {
       sessionStorage.setItem('mts_visited', 'true');
-      
-      // Increment total views
-      const unsubscribeTotal = onValue(viewsRef, (snapshot) => {
-        const currentViews = snapshot.val() || 0;
-        set(viewsRef, currentViews + 1);
-        unsubscribeTotal();
+
+      // Increment total views (once per session)
+      onValue(viewsRef, (snapshot) => {
+        set(viewsRef, (snapshot.val() || 0) + 1);
       }, { onlyOnce: true });
 
-      // Increment daily views
-      const unsubscribeDaily = onValue(dailyViewsRef, (snapshot) => {
-        const currentDailyViews = snapshot.val() || 0;
-        set(dailyViewsRef, currentDailyViews + 1);
-        unsubscribeDaily();
+      // Increment today's daily view count (once per session)
+      onValue(dailyViewsRef, (snapshot) => {
+        set(dailyViewsRef, (snapshot.val() || 0) + 1);
       }, { onlyOnce: true });
     }
 
-    // Cleanup when component unmounts (e.g. user leaves site)
+    // ─── CLEANUP ──────────────────────────────────────────────────────────────
     return () => {
-      set(mySessionRef, null);
+      // Stop listening to connection state
+      unsubConnected();
+      // Manually remove our session entry if component unmounts
+      if (mySessionRef) {
+        set(mySessionRef, null);
+      }
     };
   }, []);
 
-  return null; // This component doesn't render anything
+  return null;
 }
